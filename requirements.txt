@@ -5,8 +5,8 @@ seaborn==0.9.0
 streamlit==0.62.1
 IPython
 -f https://download.pytorch.org/whl/torch_stable.html
-torch==1.6.0+cpu
+torch==1.8.1+cpu
 sklearn
-pickle
+pickleshare==0.7.5
 joblib==0.14.1
-xgboost==0.82 
+xgboost==1.3.1
