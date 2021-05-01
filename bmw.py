@@ -352,9 +352,9 @@ if algo == 'XGB':
 #    "-------"
 
 #    df1 = pd.DataFrame({'year': [year_], 'mileage': [mileage_], 'tax': [tax_],
-                        'mpg': [mpg_], 'engineSize': [esize_]})
+                       # 'mpg': [mpg_], 'engineSize': [esize_]})
 #    df2 = pd.DataFrame(enc_pt.transform(pd.DataFrame({'model': [model_], 'fuelType': [fueltype_],
-                                                   'transmission': [transmission_]})).toarray(), index = df1.index)
+                                        #           'transmission': [transmission_]})).toarray(), index = df1.index)
 #    X_input = pd.concat([df2, df1], axis=1)
 
 #    X_input = X_input.astype('float32').values
