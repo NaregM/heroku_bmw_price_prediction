@@ -10,10 +10,10 @@ import streamlit as st
 
 import xgboost as xgb
 
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import torch.optim as optim
+#import torch
+#import torch.nn as nn
+#import torch.nn.functional as F
+#import torch.optim as optim
 import pickle
 
 from sklearn.preprocessing import MinMaxScaler
