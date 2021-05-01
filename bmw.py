@@ -22,8 +22,8 @@ from collections import defaultdict
 
 from sklearn.feature_extraction.text import CountVectorizer,TfidfVectorizer
 
-sns.set_style("darkgrid")
-sns_p = sns.color_palette('Paired')
+#sns.set_style("darkgrid")
+#sns_p = sns.color_palette('Paired')
 
 # ==============================================
 
