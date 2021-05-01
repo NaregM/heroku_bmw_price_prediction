@@ -35,85 +35,7 @@ from io import BytesIO
 # ==============================================
 
 # PyTorch Model
-class Linreg(nn.Module):
 
-
-    def __init__(self, n_features, lr, epochs, print_i, verbose = True):
-
-        super(Linreg, self).__init__()
-
-        self.lr = lr
-        self.epochs = epochs
-        self.print_i = print_i
-        self.verbose = verbose
-        self.n_in = n_features
-
-        self.linear1 = nn.Linear(in_features = n_features, out_features = 16)
-        self.linear2 = nn.Linear(in_features = 16, out_features = 16)
-        self.linear3 = nn.Linear(in_features = 16, out_features = 1)
-        #self.linear4 = nn.Linear(in_features = 64, out_features = 32)
-        #self.linear5 = nn.Linear(in_features = 32, out_features = 16)
-        #self.linear6 = nn.Linear(in_features = 16, out_features = 1)
-
-        self.relu = nn.ReLU()
-
-
-    def forward(self, x):
-
-        x = self.relu(self.linear1(x))
-        x = self.relu(self.linear2(x))
-        x = (self.linear3(x))
-        #x = self.relu(self.linear3(x))
-        #x = self.relu(self.linear4(x))
-        #x = self.relu(self.linear5(x))
-
-        return x#self.linear6(x)
-
-
-    @classmethod
-    def return_model(self, n_features, lr, epochs, print_i, verbose = True):
-
-        return self(n_features, lr, epochs, print_i, verbose)
-
-
-    def train(self):
-
-        cls_ = self.return_model(self.n_in, self.lr, self.epochs, self.print_i)
-
-        criterion = nn.MSELoss()
-        optimizer = torch.optim.Adam(cls_.parameters(), lr = self.lr)
-
-        for epoch in range(int(self.epochs)):
-
-            optimizer.zero_grad()
-            outputs = cls_(X_train_tensor)
-
-            loss = criterion(outputs, y_train_tensor)
-            loss.backward()
-
-            optimizer.step()
-
-            costs.append(loss.item())
-
-            if self.verbose:
-
-                if (epoch + 1) % self.print_i == 0:
-
-                    print(f"Epoch: {epoch+1}/{epochs}, Loss: {loss.item()}")
-
-        return cls_
-
-
-    def params(self):
-
-        """
-        Returns intercept and slope vector
-        """
-
-        model = self.return_model(self.n_in, self.lr, self.epochs, self.print_i, False)
-        model = model.train()
-
-        return model.linear.bias.detach().numpy(), model.linear.weight.detach().numpy()
 
 
 
@@ -222,7 +144,7 @@ st.markdown('-------------------------------------------------------------------
 
 
 
-algo = st.sidebar.selectbox('Select Algorithm', pd.DataFrame({'algos': ['XGB', 'Neural Network']}))
+algo = st.sidebar.selectbox('Select Algorithm', pd.DataFrame({'algos': ['XGB']}))
 
 
 #year = st.text_area("enter your age")
@@ -425,27 +347,27 @@ if algo == 'XGB':
     st.markdown("The XGB model has been trained with more than 7000 cars and has an $R^2 \simeq 0.96$ for the testing set.")
 
 
-if algo == 'Neural Network':
+#if algo == 'Neural Network':
 
-    "-------"
+#    "-------"
 
-    df1 = pd.DataFrame({'year': [year_], 'mileage': [mileage_], 'tax': [tax_],
+#    df1 = pd.DataFrame({'year': [year_], 'mileage': [mileage_], 'tax': [tax_],
                         'mpg': [mpg_], 'engineSize': [esize_]})
-    df2 = pd.DataFrame(enc_pt.transform(pd.DataFrame({'model': [model_], 'fuelType': [fueltype_],
+#    df2 = pd.DataFrame(enc_pt.transform(pd.DataFrame({'model': [model_], 'fuelType': [fueltype_],
                                                    'transmission': [transmission_]})).toarray(), index = df1.index)
-    X_input = pd.concat([df2, df1], axis=1)
+#    X_input = pd.concat([df2, df1], axis=1)
 
-    X_input = X_input.astype('float32').values
+#    X_input = X_input.astype('float32').values
 
     #X_input = torch.from_numpy(X_input.values)
     #minmax = MinMaxScaler()
-    X_input = minmax.transform(X_input)
+#    X_input = minmax.transform(X_input)
 
-    pt_model = torch.load('bmw_pytorch.pt')
-    pt_pred = pt_model(torch.from_numpy(X_input)).flatten().detach().numpy()[0]
+#    pt_model = torch.load('bmw_pytorch.pt')
+#    pt_pred = pt_model(torch.from_numpy(X_input)).flatten().detach().numpy()[0]
 
-    "## **Predicted Price**: ", pt_pred
-    st.markdown("The Neural Netrwok model has an $R^2 \simeq 0.93$.")
+#    "## **Predicted Price**: ", pt_pred
+#    st.markdown("The Neural Netrwok model has an $R^2 \simeq 0.93$.")
 
 
 
