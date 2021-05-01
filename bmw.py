@@ -222,7 +222,8 @@ st.markdown('-------------------------------------------------------------------
 
 
 
-algo = st.sidebar.selectbox('Select Algorithm', ['XGB', 'Neural Network'])
+algo = st.sidebar.selectbox('Select Algorithm', pd.DataFrame({'algos': ['XGB', 'Neural Network']}))
+
 
 #year = st.text_area("enter your age")
 
