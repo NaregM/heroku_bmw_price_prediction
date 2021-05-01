@@ -14,7 +14,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
-#import pickle
+import pickle
 
 from sklearn.preprocessing import MinMaxScaler
 
@@ -132,10 +132,78 @@ minmax = joblib.load('minmax.joblib')
 response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/bmw.jpg")
 img = Image.open(BytesIO(response.content))
 
+#response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/x1.jpg")
+#x1 = Image.open(BytesIO(response.content)).resize((200, 200))
+
+#response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/x2.png")
+#x2 = Image.open(BytesIO(response.content)).resize((200, 200))
+
+
+#response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/s1.png")
+#s1 = Image.open(BytesIO(response.content)).resize((200, 200))
+
+#response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/s2.png")
+#s2 = Image.open(BytesIO(response.content)).resize((200, 200))
+
+#response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/s3.jpg")
+#s3 = Image.open(BytesIO(response.content)).resize((200, 200))
+
+#response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/s4.png")
+#s4 = Image.open(BytesIO(response.content)).resize((200, 200))
+
+#response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/s5.png")
+#s5 = Image.open(BytesIO(response.content)).resize((200, 200))
+
+#response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/s6.jpg")
+#s6 = Image.open(BytesIO(response.content)).resize((200, 200))
+
+#response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/s7.png")
+#s7 = Image.open(BytesIO(response.content)).resize((200, 200))
+
+#response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/s8.png")
+#s8 = Image.open(BytesIO(response.content)).resize((200, 200))
+
+#response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/x3.jpg")
+#x3 = Image.open(BytesIO(response.content)).resize((200, 200))
+
+#response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/x3.jpg")
+#x4 = Image.open(BytesIO(response.content)).resize((200, 200))
+
+#response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/x5.jpeg")
+#x5 = Image.open(BytesIO(response.content)).resize((200, 200))
+
+#response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/m2.jpg")
+#m2 = Image.open(BytesIO(response.content)).resize((200, 200))
+
+#response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/m3.png")
+#m3 = Image.open(BytesIO(response.content)).resize((200, 200))
+
+#response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/m4.png")
+#m4 = Image.open(BytesIO(response.content)).resize((200, 200))
+
+#response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/m5.jpg")
+#m5 = Image.open(BytesIO(response.content)).resize((200, 200))
 
 response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/m6.png")
 m6 = Image.open(BytesIO(response.content)).resize((200, 200))
 
+#response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/i3.jpeg")
+#i3 = Image.open(BytesIO(response.content)).resize((200, 200))
+
+#response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/i8.jpg")
+#i8 = Image.open(BytesIO(response.content)).resize((200, 200))
+
+#response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/x6.jpg")
+#x6 = Image.open(BytesIO(response.content)).resize((200, 200))
+
+#response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/x7.jpg")
+#x7 = Image.open(BytesIO(response.content)).resize((200, 200))
+
+#response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/z3.png")
+#z3 = Image.open(BytesIO(response.content)).resize((200, 200))
+
+#response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/z4.jpg")
+#z4 = Image.open(BytesIO(response.content)).resize((200, 200))
 
 
 
@@ -308,6 +376,10 @@ elif model_ == ' Z4':
 #===================================================================================================================
 
 
+#transmission_ = st.radio('Transmission', ['Automatic', 'Manual', 'Semi-Auto'])
+
+#fueltype_ = st.radio('Fuel Type', ['Diesel', 'Electric', 'Hybrid', 'Other', 'Petrol'])
+
 year_ = st.slider('Select Year', min_value = 1996, max_value = 2020)
 
 mileage_ = st.number_input('Enter Mileage (Press Enter)')
@@ -318,6 +390,8 @@ esize_ = st.slider('Select Engine Size', min_value = 0.0, max_value = 6.8, step 
 
 tax_ = st.number_input('Enter Tax Per Year ($)')
 
+#df = pd.DataFrame({'model': [model_], 'year': [year_], 'transmission': [transmission_], 'mileage': [mileage_], 'fuelType': [fueltype_], 'tax': [tax_], 'mpg': [mpg_], 'engineSize': [esize_]},#
+                    #    index = ['Your BMW'])
 
 col1, col2 = st.beta_columns(2)
 
@@ -362,6 +436,8 @@ if algo == 'Neural Network':
 
     X_input = X_input.astype('float32').values
 
+    #X_input = torch.from_numpy(X_input.values)
+    #minmax = MinMaxScaler()
     X_input = minmax.transform(X_input)
 
     pt_model = torch.load('bmw_pytorch.pt')
@@ -373,7 +449,46 @@ if algo == 'Neural Network':
 
 
 
-st.markdown('---------------------------------------------------------------------------')
+
+#country_lyrics = na_df[na_df.index == country]['National Anthem'].values[0]
+
+#country_sentiment = na_df[na_df.index == country]['sentiment'].values[0]
+
+#country_id = np.where(na_df.index == country)[0][0]
+
+
+
+#if country_sentiment == "NEUTRAL":
+    #st.image(neut, use_column_width = False)
+
+#elif country_sentiment == "POSITIVE":
+#    st.image(pos, use_column_width = False)
+#else:
+#    st.image(neg, use_column_width = False)
+
+
+
+
+#show_map = st.checkbox('Show distribution of sentiment for all countries')
+
+#if show_map:
+
+
+#    fig = plt.figure(figsize = (5, 2))
+#
+#    plt.bar(np.unique(na_df['sentiment'].values, return_counts = True)[0],
+        #    np.unique(na_df['sentiment'].values, return_counts = True)[1], color = 'dodgerblue')
+
+#    st.pyplot(fig)
+
+
+#if st.checkbox('Show countries with Negative outcome'):
+
+#    na_df['Country'][na_df['sentiment'] == 'NEGATIVE'].index
+
+#if st.checkbox('Show countries with Positive outcome'):
+
+#    na_df['Country'][na_df['sentiment'] == 'POSITIVE'].index
 
 
 
@@ -381,9 +496,56 @@ st.markdown('-------------------------------------------------------------------
 
 
 
+st.markdown('---------------------------------------------------------------------------')
+
+
+#cond_non_zero = np.where(pd.DataFrame(data = X.toarray(), columns=vocab).iloc[country_id, :] != 0)
+
+#"# Most important words in national anthem lyrics of ", country, " : "
+#i_important_words = st.slider('Number of prominant words: ', 3, 12, 3)
+#df_tfidf = pd.DataFrame(np.array(vocab)[cond_non_zero][:i_important_words], columns = ['Prominant Words'])
+
+#st.write(df_tfidf.astype('object'))
 
 
 # ================================================================================
+
+#"# Countries with most similar lyrics to ", country, " "
+
+#COS_sim_m = (np.inner(X.toarray(), (X.toarray()))/(np.linalg.norm(X.toarray()) * np.linalg.norm(np.transpose(X.toarray()), axis = 0)))
+
+#i_top_match = st.slider(f'Select number of countries with most similarity', 4, 12, 4)
+
+#st.dataframe(np.array(countries)[argmax_n(COS_sim_m[country_id, :], i_top_match+1)][1:])
+
+#if True:
+
+#    st.markdown('---------------------------------------------------------------------------')
+#    st.markdown('## Cosine of Similarity Matrix')
+
+#    fig = plt.figure(figsize = (5, 3))
+#    plt.imshow(np.array(COS_sim_m), cmap = 'jet', origin = 'lower')
+#    plt.colorbar()
+#    plt.grid('off')
+#    st.pyplot(fig)
+
+# ======================================================================================================
+#"# Word-count per national anthem"
+#i_top_word_count = st.slider('Select number of countries to show', 3, 12, 3)
+
+#na_df_sorted = na_df.sort_values(by = 'Word Count', ascending = False)
+
+
+#fig = plt.figure(figsize = (5, 3))
+
+#sns.barplot(x = "Word Count", y ="Country", data = na_df_sorted[:i_top_word_count], palette = sns_p, edgecolor = 'k')
+#plt.margins(0.1)
+#st.pyplot(fig)
+
+
+#if False:
+    #st.markdown('---------------------------------------------------------------------------')
+    #df
 
 
 st.markdown('-------------------------------------------------------------------------------')

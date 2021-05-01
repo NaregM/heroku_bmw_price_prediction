@@ -1,4 +1,4 @@
-pandas==1.0.1
+pandas
 streamlit==0.62.1
 -f https://download.pytorch.org/whl/torch_stable.html
 torch==1.8.1+cpu
