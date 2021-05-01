@@ -1,4 +1,4 @@
-import numpy as np
+#import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -308,10 +308,6 @@ elif model_ == ' Z4':
 #===================================================================================================================
 
 
-#transmission_ = st.radio('Transmission', ['Automatic', 'Manual', 'Semi-Auto'])
-
-#fueltype_ = st.radio('Fuel Type', ['Diesel', 'Electric', 'Hybrid', 'Other', 'Petrol'])
-
 year_ = st.slider('Select Year', min_value = 1996, max_value = 2020)
 
 mileage_ = st.number_input('Enter Mileage (Press Enter)')
@@ -322,8 +318,6 @@ esize_ = st.slider('Select Engine Size', min_value = 0.0, max_value = 6.8, step 
 
 tax_ = st.number_input('Enter Tax Per Year ($)')
 
-#df = pd.DataFrame({'model': [model_], 'year': [year_], 'transmission': [transmission_], 'mileage': [mileage_], 'fuelType': [fueltype_], 'tax': [tax_], 'mpg': [mpg_], 'engineSize': [esize_]},#
-                    #    index = ['Your BMW'])
 
 col1, col2 = st.beta_columns(2)
 
@@ -368,8 +362,6 @@ if algo == 'Neural Network':
 
     X_input = X_input.astype('float32').values
 
-    #X_input = torch.from_numpy(X_input.values)
-    #minmax = MinMaxScaler()
     X_input = minmax.transform(X_input)
 
     pt_model = torch.load('bmw_pytorch.pt')
@@ -381,49 +373,6 @@ if algo == 'Neural Network':
 
 
 
-
-#country_lyrics = na_df[na_df.index == country]['National Anthem'].values[0]
-
-#country_sentiment = na_df[na_df.index == country]['sentiment'].values[0]
-
-#country_id = np.where(na_df.index == country)[0][0]
-
-
-
-#if country_sentiment == "NEUTRAL":
-    #st.image(neut, use_column_width = False)
-
-#elif country_sentiment == "POSITIVE":
-#    st.image(pos, use_column_width = False)
-#else:
-#    st.image(neg, use_column_width = False)
-
-
-
-
-#show_map = st.checkbox('Show distribution of sentiment for all countries')
-
-#if show_map:
-
-
-#    fig = plt.figure(figsize = (5, 2))
-#
-#    plt.bar(np.unique(na_df['sentiment'].values, return_counts = True)[0],
-        #    np.unique(na_df['sentiment'].values, return_counts = True)[1], color = 'dodgerblue')
-
-#    st.pyplot(fig)
-
-
-#if st.checkbox('Show countries with Negative outcome'):
-
-#    na_df['Country'][na_df['sentiment'] == 'NEGATIVE'].index
-
-#if st.checkbox('Show countries with Positive outcome'):
-
-#    na_df['Country'][na_df['sentiment'] == 'POSITIVE'].index
-
-
-
 st.markdown('---------------------------------------------------------------------------')
 
 
@@ -431,13 +380,7 @@ st.markdown('-------------------------------------------------------------------
 st.markdown('---------------------------------------------------------------------------')
 
 
-#cond_non_zero = np.where(pd.DataFrame(data = X.toarray(), columns=vocab).iloc[country_id, :] != 0)
 
-#"# Most important words in national anthem lyrics of ", country, " : "
-#i_important_words = st.slider('Number of prominant words: ', 3, 12, 3)
-#df_tfidf = pd.DataFrame(np.array(vocab)[cond_non_zero][:i_important_words], columns = ['Prominant Words'])
-
-#st.write(df_tfidf.astype('object'))
 
 
 # ================================================================================
