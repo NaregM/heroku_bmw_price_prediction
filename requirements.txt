@@ -1,8 +1,7 @@
-matplotlib==3.1.2
 numpy==1.17.3
 pandas==1.0.1
 streamlit==0.62.1
-IPython
+-f https://download.pytorch.org/whl/torch_stable.html
 torch==1.8.1+cpu
 sklearn
 pickleshare==0.7.5
