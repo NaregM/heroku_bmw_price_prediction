@@ -19,6 +19,7 @@ import pickle
 from sklearn.preprocessing import MinMaxScaler
 
 from collections import defaultdict
+from sklearn.linear_model import LinearRegression, Lasso, Ridge
 
 from sklearn.feature_extraction.text import CountVectorizer,TfidfVectorizer
 
@@ -48,6 +49,8 @@ xg_reg.load_model('xgb_bmw_reg.json')
 enc = joblib.load('encoder.joblib')
 enc_pt = joblib.load('encoder_pytorch.joblib')
 minmax = joblib.load('minmax.joblib')
+
+rfr = joblib.load('rfr.joblib')
 
 # ========================================================
 
@@ -144,7 +147,7 @@ st.markdown('-------------------------------------------------------------------
 
 
 
-algo = st.sidebar.selectbox('Select Algorithm', pd.DataFrame({'algos': ['XGB']}))
+algo = st.sidebar.selectbox('Select Algorithm', pd.DataFrame({'algos': ['XGBoost', 'Neural Network', 'RandomForestRegressor']}))
 
 
 #year = st.text_area("enter your age")
@@ -331,7 +334,7 @@ df = pd.DataFrame({'model': [model_], 'year': [year_], 'transmission': [transmis
                         index = ['Your BMW'])
 
 
-if algo == 'XGB':
+if algo == 'XGBoost':
 
     df1 = pd.DataFrame({'year': [year_], 'mileage': [mileage_], 'tax': [tax_],
                     'mpg': [mpg_], 'engineSize': [esize_]})
@@ -343,13 +346,30 @@ if algo == 'XGB':
 
     "-------"
 
-    "## **Predicted Price**: ", xg_reg.predict(X_input)[0]
+    "## **Predicted Price**: ", xg_reg.predict(X_input)[0], "$"
     st.markdown("The XGB model has been trained with more than 7000 cars and has an $R^2 \simeq 0.96$ for the testing set.")
 
 
-#if algo == 'Neural Network':
+if algo == 'RandomForestRegressor':
 
-#    "-------"
+    df1 = pd.DataFrame({'year': [year_], 'mileage': [mileage_], 'tax': [tax_],
+                    'mpg': [mpg_], 'engineSize': [esize_]})
+    df2 = pd.DataFrame(enc.transform(pd.DataFrame({'model': [model_], 'fuelType': [fueltype_],
+                                               'transmission': [transmission_]})).toarray(), index = df1.index)
+    X_input = pd.concat([df2, df1], axis=1)
+
+    rfr_pred = rfr.predict(X_input)[0]
+
+    "-------"
+
+    "## **Predicted Price**: ", rfr.predict(X_input)[0], "$"
+    st.markdown("The RandomForestRegressor model has been trained with more than 7000 cars and has an $R^2 \simeq 0.963$ for the testing set.")
+
+
+if algo == 'Neural Network':
+
+    "-------"
+    "See Github page"
 
 #    df1 = pd.DataFrame({'year': [year_], 'mileage': [mileage_], 'tax': [tax_],
                        # 'mpg': [mpg_], 'engineSize': [esize_]})
@@ -371,104 +391,11 @@ if algo == 'XGB':
 
 
 
-
-
-#country_lyrics = na_df[na_df.index == country]['National Anthem'].values[0]
-
-#country_sentiment = na_df[na_df.index == country]['sentiment'].values[0]
-
-#country_id = np.where(na_df.index == country)[0][0]
-
-
-
-#if country_sentiment == "NEUTRAL":
-    #st.image(neut, use_column_width = False)
-
-#elif country_sentiment == "POSITIVE":
-#    st.image(pos, use_column_width = False)
-#else:
-#    st.image(neg, use_column_width = False)
-
-
-
-
-#show_map = st.checkbox('Show distribution of sentiment for all countries')
-
-#if show_map:
-
-
-#    fig = plt.figure(figsize = (5, 2))
-#
-#    plt.bar(np.unique(na_df['sentiment'].values, return_counts = True)[0],
-        #    np.unique(na_df['sentiment'].values, return_counts = True)[1], color = 'dodgerblue')
-
-#    st.pyplot(fig)
-
-
-#if st.checkbox('Show countries with Negative outcome'):
-
-#    na_df['Country'][na_df['sentiment'] == 'NEGATIVE'].index
-
-#if st.checkbox('Show countries with Positive outcome'):
-
-#    na_df['Country'][na_df['sentiment'] == 'POSITIVE'].index
-
-
-
 st.markdown('---------------------------------------------------------------------------')
 
 
 
 st.markdown('---------------------------------------------------------------------------')
-
-
-#cond_non_zero = np.where(pd.DataFrame(data = X.toarray(), columns=vocab).iloc[country_id, :] != 0)
-
-#"# Most important words in national anthem lyrics of ", country, " : "
-#i_important_words = st.slider('Number of prominant words: ', 3, 12, 3)
-#df_tfidf = pd.DataFrame(np.array(vocab)[cond_non_zero][:i_important_words], columns = ['Prominant Words'])
-
-#st.write(df_tfidf.astype('object'))
-
-
-# ================================================================================
-
-#"# Countries with most similar lyrics to ", country, " "
-
-#COS_sim_m = (np.inner(X.toarray(), (X.toarray()))/(np.linalg.norm(X.toarray()) * np.linalg.norm(np.transpose(X.toarray()), axis = 0)))
-
-#i_top_match = st.slider(f'Select number of countries with most similarity', 4, 12, 4)
-
-#st.dataframe(np.array(countries)[argmax_n(COS_sim_m[country_id, :], i_top_match+1)][1:])
-
-#if True:
-
-#    st.markdown('---------------------------------------------------------------------------')
-#    st.markdown('## Cosine of Similarity Matrix')
-
-#    fig = plt.figure(figsize = (5, 3))
-#    plt.imshow(np.array(COS_sim_m), cmap = 'jet', origin = 'lower')
-#    plt.colorbar()
-#    plt.grid('off')
-#    st.pyplot(fig)
-
-# ======================================================================================================
-#"# Word-count per national anthem"
-#i_top_word_count = st.slider('Select number of countries to show', 3, 12, 3)
-
-#na_df_sorted = na_df.sort_values(by = 'Word Count', ascending = False)
-
-
-#fig = plt.figure(figsize = (5, 3))
-
-#sns.barplot(x = "Word Count", y ="Country", data = na_df_sorted[:i_top_word_count], palette = sns_p, edgecolor = 'k')
-#plt.margins(0.1)
-#st.pyplot(fig)
-
-
-#if False:
-    #st.markdown('---------------------------------------------------------------------------')
-    #df
 
 
 st.markdown('-------------------------------------------------------------------------------')
@@ -477,7 +404,7 @@ st.markdown("""
                 Made by [Nareg Mirzatuny](https://github.com/NaregM)
 
 Source code: [GitHub](
-                https://github.com/NaregM/planck_sz)
+                https://github.com/NaregM/heroku_bmw_price_prediction)
 
 """)
 st.markdown('-------------------------------------------------------------------------------')
